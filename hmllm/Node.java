@@ -82,11 +82,13 @@ public class Node {
      * 
      */
     public Node findNode(String k) {
-    	while(next != null) {
-    		if(key.equals(k)) 
-    			return this;
-    	}
-    	return null;
+    	if(key.equals(k)) 
+    		return this;
+    	if(next == null)
+    		return null;
+    	return next.findNode(k);
+    	
     }
+  
 }
 
