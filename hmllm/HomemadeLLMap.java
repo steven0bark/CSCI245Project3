@@ -16,11 +16,14 @@ import java.util.Iterator;
 public class HomemadeLLMap implements HomemadeMap {
 
 	/**
-	 * The head of the map
+	 * The head and tail of the map
 	 */
     private Node head, tail;
 	
 	/**
+	 * Constructor.
+	 * 
+	 * Initializes the head and tail of the map.
 	 * @param head
 	 * @param tail
 	 */
@@ -32,8 +35,9 @@ public class HomemadeLLMap implements HomemadeMap {
 
 	/**
      * Test whether an association exists for this key.
-     * @param key The key to remove
-     * @return true if there is an association for this key, false otherwise
+     * 
+     * @param key The key being looked for.
+     * @return True if there is an association for this key, false otherwise.
      */
     public boolean containsKey(String key) {
     	if(head != null)
@@ -44,8 +48,12 @@ public class HomemadeLLMap implements HomemadeMap {
 
     /**
      * Add an association to the map.
-     * @param key The key to this association
-     * @param val The value to which this key is associated
+     * 
+     * If the head is null, it adds that node to the head. Otherwise, it will put the new key at the end of the 
+     * list. If the key already exists, it will just update the value.
+     * 
+     * @param key The key to this association.
+     * @param val The value to which this key is associated.
      */
     public void put(String key, String val) {
     	if(head != null) {
@@ -60,12 +68,14 @@ public class HomemadeLLMap implements HomemadeMap {
     		head = new Node(key, val, null);
     		tail = head;
     	}
+    	
     }  
 
     /**
-     * Get the value for a key.
+     * Gets the value for a key.
+     * 
      * @param key The key whose value we're retrieving.
-     * @return The value associated with this key, null if none exists
+     * @return The value associated with this key, null if none exists.
      */
     public String get(String key) {
     	if(head != null) {
@@ -78,38 +88,45 @@ public class HomemadeLLMap implements HomemadeMap {
 
     /**
      * Creates an Iterator object to iterate through the list.
+     * 
      * Creates an anonymous class inside of the method that defines all necessary
-     * methods for an iterator, and the returns an instance of that iterator
+     * methods for an iterator, and the returns an instance of that iterator. If the map is empty,
+     * it will return an iterator that does nothing.
      * 
      * @return An iterator over the set of keys.
      */
     public Iterator<String> keyIterator() {
     	if(head != null) {
 	    	return new Iterator<String>() {
+	    		
 	    		/**
 	    		 * Holds where we are in the list
 	    		 */
-	    		private Node place = head;
+	    		private Node next = head;
 	    		
 	    		/**
-	    		 * Returns true if there is a next node, false if not
+	    		 * @return Returns true if the node we are on exists, false if not
+	    		 * 
 	    		 */
-				public boolean hasNext() { return place.next() != null; }
+				public boolean hasNext() { return next != null; }
 	
 				/**
 				 *  Determines if there is a next in the list. 
+				 *  
 				 *  If there is then it returns the key and sets the place to next for next call.
-				 *  Otherwise it returns an empty string.
+				 *  Otherwise it returns an null.
+				 *  
+				 *  @return returns the key that the iterator is on.
 				 */
 				@Override
 				public String next() {
 					String toreturn = "";
 					if(hasNext()) {
-						toreturn = place.key();
-						place = place.next();
+						toreturn = next.key();
+						next = next.next();
 						return toreturn;
 					}
-						return toreturn;
+						return null;
 					
 				}
 	    		
@@ -117,18 +134,20 @@ public class HomemadeLLMap implements HomemadeMap {
     	}
     	return new Iterator<String>() {	
     		/**
-    		 * Returns true if there is a next node, false if not
+    		 * There will never be a next if this case runs
+    		 * 
+    		 * @return false
     		 */
 			public boolean hasNext() { return false; }
 
 			/**
-			 *  Determines if there is a next in the list. 
-			 *  If there is then it returns the key and sets the place to next for next call.
-			 *  Otherwise it returns an empty string.
+			 *  There will never be a next if this runs
+			 *  
+			 *  @return null
 			 */
 			@Override
 			public String next() {
-				return "";
+				return null;
 				
 			}
     		
@@ -137,7 +156,9 @@ public class HomemadeLLMap implements HomemadeMap {
 
     
     /**
-     * Remove the association for this key.
+     * Remove the association for this key. Checks for an empty list, if the list is size 1 
+     * (or head is the node to remove), and if tail is the node to remove.
+     * 
      * @param key The key to remove
      */   
     public void remove(String key) {
@@ -159,13 +180,14 @@ public class HomemadeLLMap implements HomemadeMap {
 	    		}
 	    		place = place.next();
 	    	}
-
-	    		
 	    }
     }
 
     /**
-     *Returns the Node that contains a key, or returns null when that key does not exists 
+     * Find if a node exists by making a recursive call to the method in Node class.
+     *
+     * @param k The key being looked for
+     * @return the Node that contains the string, or null if the list empty
      */
     public Node findNode(String k) {
     	if(head != null) 

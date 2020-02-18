@@ -16,7 +16,7 @@ public class Node {
 	private String key;
 	
 	/**
-	 * the value in the map
+	 * The value in the map
 	 */
 	private String value;
 	
@@ -26,7 +26,7 @@ public class Node {
 	private Node next;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * Initializes all necessary instance variables to create a node in the list
 	 * @param k The key in the map.
@@ -40,14 +40,15 @@ public class Node {
 	}
 
 	/**
-	 * getNext gives the next node in the list.
+	 * Gives the next node in the list.
+	 * 
 	 * @return the next Node in the list.
 	 */
-	public Node next() {
-		return next;
-	}
+	public Node next() { return next; }
+	
 	/**
-	 * setNext sets a node object to be the next node after the calling object
+	 * Sets a node object to be the next node after the calling object.
+	 * 
 	 * @param n The new node to be set to the next node after the calling object.
 	 */
 	public void setNext(Node n) {
@@ -63,29 +64,32 @@ public class Node {
 	}
 
 	/**
-	 * getValue gets the value
+	 * Gets the value.
+	 * 
 	 * @return the value associated with the key
 	 */
-	public String value() {
-		return value;
-	}
+	public String value() { return value; }
 
 	/**
-	 * setValue sets a value to be associated with a key
+	 * Sets a value to be associated with a key.
+	 * 
 	 * @param v The value to be associated to the string
 	 */
-	public void setvalue(String v) {
-		value = v;
-	}
+	public void setvalue(String v) { value = v; }
     
     /**
+     * Finds the node that contains a key, if the key does not exist
+     * it will return null.
      * 
+     * @param k The key being looked for 
+     * @return The node that contains a key
      */
     public Node findNode(String k) {
-    	if(key.equals(k)) 
-    		return this;
-    	if(next == null)
-    		return null;
+    	
+    	if(key.equals(k))  return this;
+    	
+    	if(next == null) return null;
+    	
     	return next.findNode(k);
     	
     }
